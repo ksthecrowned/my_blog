@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Share a post{% endblock %}
+{% block content %}
+
+  <div class="container">
+    <div id="comment" class="row container">
+      <div class="col-md-9 col-sm-12 col-xs-12" style="background-color:#fff;padding:3rem;box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);">
+        {% if sent %}
+        <div style="margin-bottom: 12rem;">
+          <h2 style="margin-bottom: 2rem;">E-mail envoyé avec succès</h2>
+          <p>
+          "{{ post.title }}" a bien été envoyé. {% comment %} {{ form.cleaned_
+          data.to }}.{% endcomment %}
+          </p>
+        </div>
+        {% else %}
+          <h2>Partager "{{ post.title }}" par mail.</h2><hr>
+          <form method="post">
+          {{ form|crispy }}
+          {% csrf_token %}
+          <input type="submit" value="Envoyer" class="btn btn-primary btn-lg">
+          </form>
+      {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

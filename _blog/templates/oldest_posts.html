@@ -1,0 +1,8 @@
+<ul>
+  {% for post in oldest_posts %}
+  <li>
+  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+  </li>
+  <hr>
+  {% endfor %}
+</ul>

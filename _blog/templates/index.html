@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load blog_tags %}
+{% load static %}
+
+{% block title %}Bienvenu sur mon blog{% endblock %}
+
+{% block content %}
+
+	<!-- Preview personnal challenge -->
+	<div class="container">
+		<div class="md-form mt-0" style="background-color: #fff;padding:2rem;box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);">
+			<p style="font-size: 2rem;">Coaching et Accompagnement personnalisé pour toute personne
+				souhaitant s'engager vers une liberté finanacière.
+			</p>
+				
+				
+		</div>
+	</div>
+
+
+<section id="articles">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 col-sm-8 col-xs-12"">
+				{% for post in posts %}
+				<div class="column">
+					<div class="col article-box" style="padding: 2rem;">
+						<div class="article-img">
+							<a href="{{ post.get_absolute_url }}">
+								<img src="{{ post.cover.url }}" class="w-100" alt="">
+								<!-- <img src="{{ post.image.url}}" class="w-auto" alt=""> -->
+							</a>
+						</div>
+						<div class="article-title">
+							<h3 style="text-transform: uppercase;" class="text-center">
+								<a href="{{ post.get_absolute_url }}">
+									{{ post.title }}
+								</a>
+							</h3>
+							<hr>
+						</div>
+
+						<div class="article-content">
+							{{ post.body|markdown|truncatewords_html:50 }} <span></span>
+						</div><hr>
+						<div class="article-footer">
+							<div class="row" style="font-size: 1.8rem;">
+								<div class="col-md-3 col-sm-6 col-xs-5" style="margin: 1rem 0 0 0;">
+									<a><i class="fa fa-user"></i> {{post.author}}</a>
+								</div>
+
+								<!-- Share  buttons -->
+								<div class="col-md-3 col-sm-6 col-xs-7" style="font-size:3rem;cursor:pointer">
+									<a><i class="fa fa-whatsapp"></i></a>
+									<a><i class="fa fa-facebook-square"></i></a>
+									<a><i class="fa fa-twitter-square"></i></a>
+									<a><i class="fa fa-instagram"></i></a>						
+								</div> 
+								
+								<div class="col-md-6 col-sm-12 col-xs-12" style="margin: 1rem 0 0 0;">
+									<a><i style="font-size: 2.5rem;" class="fa fa-tags"></i> {{ post.tags.all|join:", " }}</a>
+								</div>
+							</div>
+							
+							<div>
+								<p style="
+									margin-top:2rem;
+								"><i class="fa fa-clock-o"></i> {{ post.publish }}</p>
+								<!-- <p>
+									<a href="{% url "blog:post_share" post.id %}">
+										<i class="fa fa-3x fa-google-plus-square"></i>
+									</a>
+								</p> -->
+							</div>
+						</div>
+					</div>
+					<hr>
+				</div>
+
+				{% endfor %}
+				
+				{% include "pagination.html" with page=posts %}
+			</div>
+
+			<span id="latest"></span>
+			<div class="col-md-3 col-sm-4 col-xs-12">
+				<div class="column">
+					<div class="col side-box">
+						<div class="side-title">
+							<h3>Plus récents</h3>
+						</div>
+						<hr>
+						<div style="text-transform: uppercase;" class="side-content">
+							{% show_latest_posts 5 %}
+						</div>
+					</div>
+					<hr>
+				</div>
+				<span id="mostcom"></span>
+				<div class="column">
+					<div class="col side-box">
+						<div class="side-title">
+							<h3>Plus commentés</h3>
+						</div>
+						<hr>
+						<div class="side-content">
+							{% get_most_commented_posts as most_commented_posts %}
+							<ul style="text-transform: uppercase;">
+							{% for post in most_commented_posts %}
+								<li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+								<hr>
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+					<hr>
+				</div>
+				
+				<span id="oldest"></span>
+				<div class="column">
+					<div class="col side-box">
+						<div class="side-title">
+							<h3>Autres</h3>
+						</div>
+						<hr>
+						<div style="text-transform: uppercase;" class="side-content">
+							{% show_oldest_posts 5 %}
+						</div>
+					</div>
+					<hr>
+				</div>
+
+				<span id="about"></span>
+				<div class="column">
+					<div class="col side-box">
+						<div class="side-title">
+							<h3>Personnal Challenge</h3>
+						</div>
+						<div class="side-content" style="padding: 1rem;">
+							<p>
+								Lancé en janvier 2021 par <b><i>Pricille Moussodji</i></b> 
+								jeune Entrepreneur et Coach en dévéloppement personnel, Persornal 
+								Challenge est projet ayant pour objet la formation et l'accompagnement
+								pour toute personne souhaitant atteindre vers une liberté finanacière.
+								Ainsi, Personal Challenge travaillera en collaboration avec vous sur vos 
+								projets vous aidant à trouver des idées innovantes par rapport à votre 
+								domaine, trouver des stratégies gagnantes usqu'à la réalisation du projet.
+							</p>
+						</div>
+					</div>
+					<hr>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+</div>
+
+
+{% endblock %}
